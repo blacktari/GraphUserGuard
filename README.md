@@ -1,6 +1,6 @@
 # GraphUserGuard
 
-GraphUserGuard is a TypeScript-based application that provides a GraphQL API for managing user data and authentication using TypeORM with PostgreSQL as the database. This project utilizes Apollo Server and Express to create a robust backend service.
+GraphUserGuard is a TypeScript-based application that provides a GraphQL API for managing user data and authentication using TypeORM with MongoDB as the database. This project utilizes Apollo Server and Express to create a robust backend service.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ GraphUserGuard is a TypeScript-based application that provides a GraphQL API for
 
 - User authentication and authorization
 - GraphQL queries and mutations
-- PostgreSQL database support through TypeORM
+- MongoDB database support through TypeORM
 - Modular structure with TypeScript for type safety
 
 ## Technologies Used
@@ -26,7 +26,7 @@ GraphUserGuard is a TypeScript-based application that provides a GraphQL API for
 - [Express](https://expressjs.com/) - Web framework for Node.js
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/) - GraphQL server
 - [TypeORM](https://typeorm.io/) - ORM for TypeScript and JavaScript
-- [PostgreSQL](https://www.postgresql.org/) - Relational database
+- [MongoDB](https://www.mongodb.com/) - NoSQL database
 - [GraphQL](https://graphql.org/) - Query language for APIs
 
 ## Installation
