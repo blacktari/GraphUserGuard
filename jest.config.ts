@@ -1,6 +1,6 @@
-import type { Config } from 'jest';
+import type { Config as JestConfig } from '@jest/types';
 
-const config: Config = {
+const config: JestConfig.InitialOptions = {
     preset: 'ts-jest',
     testEnvironment: 'node',
     setupFiles: ['<rootDir>/src/setupTests.ts'],

@@ -12,9 +12,9 @@ describe("User CRUD", () => {
 
   test("should create a user", async () => {
     const user = await User.create({
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
+      firstName: "Tari",
+      lastName: "Osadebe",
+      email: "tari.osadebe@example.com",
       password: "password123",
     }).save();
     expect(user.id).toBeDefined();

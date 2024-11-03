@@ -3,39 +3,27 @@ import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolver/UserResolver";
-import { MongoClient } from "mongodb";
+import { connectDB } from ".//config/db"; 
 
 async function main() {
   // Connect to MongoDB
-  const uri = "mongodb://localhost:27017"; 
-  const client = new MongoClient(uri);
+  const db = await connectDB(); // Use the connectDB function to establish the connection
+  console.log("Connected to MongoDB");
 
-  try {
-    await client.connect();
-    console.log("Connected to MongoDB");
+  // Build GraphQL schema
+  const schema = await buildSchema({
+    resolvers: [UserResolver],
+  });
 
-    const db = client.db("GraphUserGuardDb"); 
-    const usersCollection = db.collection("users");
+  // Create Apollo Server
+  const server = new ApolloServer({ schema });
 
+  const app = express();
+  server.applyMiddleware({ app });
 
-    // Build GraphQL schema
-    const schema = await buildSchema({
-      resolvers: [UserResolver],
-    });
-
-    // Create Apollo Server
-    const server = new ApolloServer({ schema, context: () => ({ db }) });
-
-    const app = express();
-    server.applyMiddleware({ app });
-
-    app.listen({ port: 4000 }, () => {
-      console.log("Server ready at http://localhost:4000/graphql");
-    });
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    process.exit(1);
-  }
+  app.listen({ port: 4000 }, () => {
+    console.log("Server ready at http://localhost:4000/graphql");
+  });
 }
 
 main().catch((error) => console.error(error));

@@ -1,12 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, ObjectID, ObjectIdColumn, Column, BaseEntity } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @ObjectIdColumn() // Using ObjectIdColumn for MongoDB
+  id!: ObjectID;
 
   @Field()
   @Column()
@@ -26,7 +26,7 @@ export class User extends BaseEntity {
   email!: string;
 
   @Column()
-  password!: string;
+  password!: string; // Handling password hashing
 
   @Column("bool", { default: false })
   confirmed!: boolean;
