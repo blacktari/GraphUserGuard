@@ -1,12 +1,19 @@
-import { Entity, ObjectID, ObjectIdColumn, Column, BaseEntity } from "typeorm";
+import { Entity, ObjectIdColumn, Column, BaseEntity } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectId } from "mongodb";
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
   @Field(() => ID)
-  @ObjectIdColumn() // Using ObjectIdColumn for MongoDB
-  id!: ObjectID;
+  @ObjectIdColumn() // Maps to MongoDB's _id field
+  _id!: ObjectId;
+
+  // Alias for _id to use with Type-GraphQL
+  @Field(() => ID)
+  get id(): string {
+    return this._id.toHexString();
+  }
 
   @Field()
   @Column()
@@ -26,17 +33,8 @@ export class User extends BaseEntity {
   email!: string;
 
   @Column()
-  password!: string; // Handling password hashing
+  password!: string;
 
   @Column("bool", { default: false })
   confirmed!: boolean;
-
-  constructor() {
-    super();
-    this.firstName = "";
-    this.lastName = "";
-    this.email = "";
-    this.password = "";
-    this.confirmed = false;
-  }
 }

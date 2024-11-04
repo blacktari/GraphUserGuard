@@ -1,6 +1,5 @@
-import { Arg, ID, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, ID, Mutation, Query, Resolver } from "type-graphql";
 import { User } from "../entity/User";
-import { ObjectID } from "typeorm";
 
 @Resolver()
 export class UserResolver {
@@ -22,25 +21,24 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  async user(@Arg("id", () => ID) id: string): Promise<User | undefined> { // Using ID type for MongoDB
-    const user = await User.findOne({ where: { id: new ObjectID(id) } }); 
-    return user || undefined; // Return undefined if not found
+  async user(@Arg("id", () => ID) id: string): Promise<User | undefined> {
+    return await User.findOne({ where: { id } });
   }
 
   @Mutation(() => Boolean)
-  async deleteUser(@Arg("id", () => ID) id: string): Promise<boolean> { // Using ID type for MongoDB
-    const result = await User.delete({ id: new ObjectID(id) }); 
-    return result.affected !== 0; // Return true if deleted
+  async deleteUser(@Arg("id", () => ID) id: string): Promise<boolean> {
+    const result = await User.delete({ id });
+    return result.affected !== 0;
   }
 
   @Mutation(() => User, { nullable: true })
   async updateUser(
-    @Arg("id", () => ID) id: string, // Using ID type for MongoDB
+    @Arg("id", () => ID) id: string,
     @Arg("firstName", { nullable: true }) firstName?: string,
     @Arg("lastName", { nullable: true }) lastName?: string,
     @Arg("email", { nullable: true }) email?: string
   ): Promise<User | undefined> {
-    const user = await User.findOne({ where: { id: new ObjectID(id) } });
+    const user = await User.findOne({ where: { id } });
     if (!user) return undefined;
 
     if (firstName) user.firstName = firstName;
