@@ -37,3 +37,10 @@ To get started with GraphUserGuard, clone the repository and install the depende
 git clone https://github.com/your-username/GraphUserGuard.git
 cd GraphUserGuard
 yarn install
+
+
+### Changes Made:
+1. **Database Update**: Changed the database reference from PostgreSQL to MongoDB in both the project description and the installation instructions.
+2. **Technologies Used**: Updated the list to include MongoDB instead of PostgreSQL.
+
+Feel free to modify any additional sections as needed, and don't forget to push these changes to your GitHub repository!

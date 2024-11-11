@@ -1,5 +1,6 @@
 import { createConnection } from 'typeorm';
 import { User } from "../entity/User";
+import { RegisterInput } from '../inputs/RegisterInput';
 
 async function connectDB() {
     try {
@@ -10,7 +11,7 @@ async function connectDB() {
             database: 'GraphUserGuardDb',
             synchronize: true,
             useUnifiedTopology: true, // Importanted to avoid deprecation warnings
-            entities: [User],
+            entities: [User, RegisterInput],
         });
         
         if (connection ) {console.log('Connected to MongoDB with TypeORM')};

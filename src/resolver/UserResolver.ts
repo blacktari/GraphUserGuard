@@ -1,5 +1,6 @@
 import { Arg, ID, Mutation, Query, Resolver } from "type-graphql";
 import { User } from "../entity/User";
+import { ObjectId } from "mongodb";
 
 @Resolver()
 export class UserResolver {
@@ -22,13 +23,14 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   async user(@Arg("id", () => ID) id: string): Promise<User | undefined> {
-    return await User.findOne({ where: { id } });
+    // Convert string to ObjectId and query by the actual _id field
+    return await User.findOne({ where: { _id: new ObjectId(id) } });
   }
 
   @Mutation(() => Boolean)
   async deleteUser(@Arg("id", () => ID) id: string): Promise<boolean> {
-    const result = await User.delete({ id });
-    return result.affected !== 0;
+    const result = await User.delete({ _id: new ObjectId(id) });
+    return result.affected !== 0; // Return true if deletion was successful
   }
 
   @Mutation(() => User, { nullable: true })
@@ -38,7 +40,7 @@ export class UserResolver {
     @Arg("lastName", { nullable: true }) lastName?: string,
     @Arg("email", { nullable: true }) email?: string
   ): Promise<User | undefined> {
-    const user = await User.findOne({ where: { id } });
+    const user = await User.findOne({ where: { _id: new ObjectId(id) } });
     if (!user) return undefined;
 
     if (firstName) user.firstName = firstName;
